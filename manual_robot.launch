@@ -1,0 +1,135 @@
+<launch>
+	<arg name="video_device" default="/dev/video0" />
+	<arg name="image_width" default="640" />
+	<arg name="image_height" default="480" />
+
+	<node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen">
+		<param name="video_device" value="$(arg video_device)" />
+		<param name="image_width" value="$(arg image_width)" />
+		<param name="image_height" value="$(arg image_height)"/>
+		<param name="pixel_format" value="yuyv" />
+		<param name="camera_frame_id" value="usb_cam" />
+		<param name="io_method" value="mmap"/>
+	</node>
+
+	<arg name="markerId" default="701"/>
+	<arg name="markerSize" default="0.07"/>
+	<!-- in meter -->
+	<arg name="eye" default="left"/>
+	<arg name="marker_frame" default="marker_frame"/>
+	<arg name="ref_frame" default=""/>
+	<!-- leave empty and the pose will be published wrt param parent_name -->
+	<arg name="corner_refinement" default="LINES" />
+	<!-- NONE, HARRIS, LINES, SUBPIX -->
+
+
+	<node name="aruco_markers" pkg="aruco_ros" type="marker_publisher">
+		<remap from="/camera_info" to="/usb_cam/camera_info" />
+		<remap from="/image" to="/usb_cam/image_raw" />
+		<param name="image_is_rectified" value="True"/>
+		<param name="marker_size" value="$(arg markerSize)"/>
+		<param name="marker_id" value="$(arg markerId)"/>
+		<param name="marker_id1" value="33" />
+		<param name="marker_id2" value="27" />
+		<param name="reference_frame" value="$(arg ref_frame)"/>
+		<!-- frame in which the marker pose will be refered -->
+		<param name="camera_frame" value="base_link"/>
+		<param name="marker_frame" value="$(arg marker_frame)" />
+		<param name="corner_refinement" value="$(arg corner_refinement)" />
+	</node>
+
+	<group ns="Robot_ACAC">
+		<node name="aruco_filter" pkg="marker_filter" type="marker_filter_node">
+			<param name="id" value="33" />
+			<remap from="markers" to="/aruco_markers/markers" />
+			<remap from="pose" to="robot_pose" />
+		</node>
+
+		<node name="error" pkg="error" type="error_node">
+			<remap from="measurement" to="out_pose" />
+			<remap from="setpoint" to="/Robot_ABAB/out_pose" />
+			<remap from="error" to="error" />
+		</node>
+
+		<node name="angular_proportional_controller" pkg="controller" type="controller_node">
+			<param name="P_gain" value="-1" />
+			<remap from="error" to="error" />
+			<remap from="control_signal" to="twist_signal" />
+		</node>
+
+		<node name="twist_bridge" pkg="twist_to_motorsignal" type="twist_to_motorsignal_node">
+			<remap from="twist" to="twist_signal" />
+			<remap from="signal" to="motor_signal" />
+			<param name="max_motor_signal" value="0.1" />
+
+		</node>
+
+		<node name="motor_to_protocol" pkg="motor_to_protocol" type="motor_to_protocol_node">
+			<remap from="motor_signal" to="motor_signal" />
+			<remap from="packet" to="packet" />
+		</node>
+
+		<node name="router" pkg="router" type="router_node">
+			<param name="addressHigh" value="0x0013A200" />
+			<param name="addressLow" value="0x4090E15F" />
+			<remap from="packet" to="packet" />
+			<remap from="addressed_packet" to="/final_packet" />
+		</node>
+
+		<node name="camera_to_fixed_frame" pkg="camera_to_fixed_frame" type="camera_to_fixed_frame_node">
+			<remap from="in_pose" to="robot_pose" />
+			<remap from="reference_pose" to="/reference_pose" />
+			<remap from="out_pose" to="out_pose" />
+		</node>
+	</group>
+
+	<group ns="Robot_ABAB">
+		<node name="aruco_filter" pkg="marker_filter" type="marker_filter_node">
+			<param name="id" value="27" />
+			<remap from="markers" to="/aruco_markers/markers" />
+			<remap from="pose" to="robot_pose" />
+		</node>
+
+		<node name="teleop_key" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py">
+			<remap from="cmd_vel" to="keyboard_input" />
+		</node>
+
+		<node name="twist_bridge" pkg="twist_to_motorsignal" type="twist_to_motorsignal_node">
+			<remap from="twist" to="keyboard_input" />
+			<remap from="signal" to="motor_signal" />
+			<param name="max_motor_signal" value="0.1" />
+		</node>
+
+		<node name="motor_to_protocol" pkg="motor_to_protocol" type="motor_to_protocol_node">
+			<remap from="motor_signal" to="motor_signal" />
+			<remap from="packet" to="packet" />
+		</node>
+
+		<node name="router" pkg="router" type="router_node">
+			<param name="addressHigh" value="0x0013A200" />
+			<param name="addressLow" value="0x4090E12C" />
+			<remap from="packet" to="packet" />
+			<remap from="addressed_packet" to="/final_packet" />
+		</node>
+
+		<node name="camera_to_fixed_frame" pkg="camera_to_fixed_frame" type="camera_to_fixed_frame_node">
+			<remap from="in_pose" to="robot_pose" />
+			<remap from="reference_pose" to="/reference_pose" />
+			<remap from="out_pose" to="out_pose" />
+		</node>
+	</group>
+
+	<group ns="Fixed_Reference_Frame">
+		<node name="aruco_filter" pkg="marker_filter" type="marker_filter_node">
+			<param name="id" value="37" />
+			<remap from="markers" to="/aruco_markers/markers" />
+			<remap from="pose" to="/reference_pose" />
+		</node>
+	</group>
+
+	<node name="serial" pkg="serial_xbee" type="serial_xbee_node">
+		<param name="port" value="/dev/ttyUSB0" />
+		<param name="baud" value="9600" />
+		<remap from="packet" to="final_packet" />
+	</node>
+</launch>
