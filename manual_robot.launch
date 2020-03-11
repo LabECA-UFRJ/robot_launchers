@@ -10,6 +10,7 @@
 		<param name="pixel_format" value="yuyv" />
 		<param name="camera_frame_id" value="usb_cam" />
 		<param name="io_method" value="mmap"/>
+		<param name="framerate" value="60" />
 	</node>
 
 	<arg name="markerId" default="701"/>
@@ -52,7 +53,9 @@
 		</node>
 
 		<node name="angular_proportional_controller" pkg="controller" type="controller_node">
-			<param name="P_gain" value="-1" />
+			<param name="P_gain" value="-0.005" />
+			<param name="D_gain" value="-0.00001" />
+
 			<remap from="error" to="error" />
 			<remap from="control_signal" to="twist_signal" />
 		</node>
@@ -128,7 +131,7 @@
 	</group>
 
 	<node name="serial" pkg="serial_xbee" type="serial_xbee_node">
-		<param name="port" value="/dev/ttyUSB0" />
+		<param name="port" value="/dev/ttyUSB1" />
 		<param name="baud" value="9600" />
 		<remap from="packet" to="final_packet" />
 	</node>
