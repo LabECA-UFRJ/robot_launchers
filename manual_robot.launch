@@ -72,7 +72,7 @@
 			<remap from="packet" to="packet" />
 		</node>
 
-		<node name="router" pkg="router" type="router_node">
+		<node name="xbee_router" pkg="router" type="xbee_node">
 			<param name="addressHigh" value="0x0013A200" />
 			<param name="addressLow" value="0x4090E15F" />
 			<remap from="packet" to="packet" />
@@ -108,7 +108,7 @@
 			<remap from="packet" to="packet" />
 		</node>
 
-		<node name="router" pkg="router" type="router_node">
+		<node name="xbee_router" pkg="router" type="xbee_node">
 			<param name="addressHigh" value="0x0013A200" />
 			<param name="addressLow" value="0x4090E12C" />
 			<remap from="packet" to="packet" />
