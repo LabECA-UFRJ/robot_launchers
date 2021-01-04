@@ -27,7 +27,7 @@
 
 		</node>
 
-		<node name="unity_router" pkg="router" type="unity_node">
+		<node name="unity_router" pkg="router" type="router_unity_node">
 			<param name="id" value="2" />
 			<remap from="motor_signal" to="motor_signal" />
 			<remap from="robot_cmd_vel" to="/robot_cmd_vel" />
@@ -51,7 +51,7 @@
 			<param name="max_motor_signal" value="0.1" />
 		</node>
 
-		<node name="unity_router" pkg="router" type="unity_node">
+		<node name="unity_router" pkg="router" type="router_unity_node">
 			<param name="id" value="1" />
 			<remap from="motor_signal" to="motor_signal" />
 			<remap from="robot_cmd_vel" to="/robot_cmd_vel" />
