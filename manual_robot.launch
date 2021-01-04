@@ -40,7 +40,7 @@
 	</node>
 
 	<group ns="Robot_ACAC">
-		<node name="aruco_filter" pkg="filter" type="aruco_node">
+		<node name="aruco_filter" pkg="filter" type="filter_aruco_node">
 			<param name="id" value="33" />
 			<remap from="markers" to="/aruco_markers/markers" />
 			<remap from="pose" to="robot_pose" />
@@ -87,7 +87,7 @@
 	</group>
 
 	<group ns="Robot_ABAB">
-		<node name="aruco_filter" pkg="filter" type="aruco_node">
+		<node name="aruco_filter" pkg="filter" type="filter_aruco_node">
 			<param name="id" value="27" />
 			<remap from="markers" to="/aruco_markers/markers" />
 			<remap from="pose" to="robot_pose" />
@@ -123,7 +123,7 @@
 	</group>
 
 	<group ns="Fixed_Reference_Frame">
-		<node name="aruco_filter" pkg="filter" type="aruco_node">
+		<node name="aruco_filter" pkg="filter" type="filter_aruco_node">
 			<param name="id" value="37" />
 			<remap from="markers" to="/aruco_markers/markers" />
 			<remap from="pose" to="/reference_pose" />
