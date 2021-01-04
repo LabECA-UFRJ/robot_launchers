@@ -32,6 +32,16 @@
 			<remap from="motor_signal" to="motor_signal" />
 			<remap from="robot_cmd_vel" to="/robot_cmd_vel" />
 		</node>
+
+		<node name="spawner" pkg="robot_spawner" type="spawner.py">
+			<param name="id" value="1" />
+			<param name="x" value="0" />
+			<param name="y" value="0" />
+			<param name="z" value="0" />
+			<param name="rotation" value="0.0" />
+			<remap from="presence" to="/presence" />
+			<remap from="robot" to="/robot_def" />
+		</node>
 	</group>
 
 	<group ns="Manual_Robot">
@@ -55,6 +65,16 @@
 			<param name="id" value="1" />
 			<remap from="motor_signal" to="motor_signal" />
 			<remap from="robot_cmd_vel" to="/robot_cmd_vel" />
+		</node>
+
+		<node name="spawner" pkg="robot_spawner" type="spawner.py">
+			<param name="id" value="2" />
+			<param name="x" value="3" />
+			<param name="y" value="0" />
+			<param name="z" value="3" />
+			<param name="rotation" value="90.0" />
+			<remap from="presence" to="/presence" />
+			<remap from="robot" to="/robot_def" />
 		</node>
 	</group>
 </launch>
