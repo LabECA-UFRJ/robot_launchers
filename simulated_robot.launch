@@ -23,7 +23,7 @@
 		<node name="twist_bridge" pkg="twist_to_motorsignal" type="twist_to_motorsignal_node">
 			<remap from="twist" to="twist_signal" />
 			<remap from="signal" to="motor_signal" />
-			<param name="max_motor_signal" value="0.1" />
+			<param name="max_motor_signal" value="1" />
 
 		</node>
 
@@ -34,7 +34,7 @@
 		</node>
 
 		<node name="spawner" pkg="robot_spawner" type="spawner.py">
-			<param name="id" value="1" />
+			<param name="id" value="2" />
 			<param name="x" value="0" />
 			<param name="y" value="0" />
 			<param name="z" value="0" />
@@ -68,7 +68,7 @@
 		</node>
 
 		<node name="spawner" pkg="robot_spawner" type="spawner.py">
-			<param name="id" value="2" />
+			<param name="id" value="1" />
 			<param name="x" value="3" />
 			<param name="y" value="0" />
 			<param name="z" value="3" />
