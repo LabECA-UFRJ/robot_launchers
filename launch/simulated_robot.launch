@@ -44,6 +44,11 @@
 		</node>
 	</group>
 
+	<arg name="ros_ip" />
+	<node name="UnityBridge" pkg="simulation_endpoint" type="server_endpoint.py" respawn="true">
+		<param name="ROS_IP" value="$(arg ros_ip)" />
+	</node>
+
 	<group ns="Manual_Robot">
 		<node name="unity_filter" pkg="filter" type="filter_unity_node">
 			<param name="id" value="1" />
