@@ -41,9 +41,8 @@
 	</group>
 
 	<arg name="ros_ip" />
-	<node name="UnityBridge" pkg="simulation_endpoint" type="server_endpoint.py" respawn="true">
-		<param name="/ROS_IP" value="$(arg ros_ip)" />
-	</node>
+	<param name="/ROS_IP" value="$(arg ros_ip)" />
+	<node name="UnityBridge" pkg="simulation_endpoint" type="server_endpoint.py" respawn="true" />
 
 	<node name="SimulatedPose2TfPublisher" pkg="robot_tf2" type="robot_tf2_node" respawn="true" />
 
