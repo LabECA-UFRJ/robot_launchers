@@ -1,20 +1,16 @@
 <launch>
 	<group ns="Auto_Robot">
-		<node name="unity_filter" pkg="filter" type="filter_unity_node">
-			<param name="id" value="2" />
-			<remap from="robots" to="/robots" />
-			<remap from="out_pose" to="out_pose" />
-		</node>
-
 		<node name="error" pkg="error" type="error_node">
+			<param name="source_frame" value="Simulated_2" />
+			<param name="target_frame" value="Simulated_1" />			
 			<remap from="measurement" to="out_pose" />
 			<remap from="setpoint" to="/Manual_Robot/out_pose" />
 			<remap from="error" to="error" />
 		</node>
 
 		<node name="angular_proportional_controller" pkg="controller" type="controller_node">
-			<param name="P_gain" value="0.005" />
-			<param name="D_gain" value="0.00001" />
+			<param name="P_gain" value="-0.005" />
+			<param name="D_gain" value="-0.00001" />
 
 			<remap from="error" to="error" />
 			<remap from="control_signal" to="twist_signal" />
@@ -38,7 +34,7 @@
 			<param name="x" value="0" />
 			<param name="y" value="0" />
 			<param name="z" value="0" />
-			<param name="rotation" value="0.0" />
+			<param name="rotation" value="90.0" />
 			<remap from="presence" to="/presence" />
 			<remap from="robot" to="/robot_def" />
 		</node>
@@ -46,16 +42,12 @@
 
 	<arg name="ros_ip" />
 	<node name="UnityBridge" pkg="simulation_endpoint" type="server_endpoint.py" respawn="true">
-		<param name="ROS_IP" value="$(arg ros_ip)" />
+		<param name="/ROS_IP" value="$(arg ros_ip)" />
 	</node>
 
-	<group ns="Manual_Robot">
-		<node name="unity_filter" pkg="filter" type="filter_unity_node">
-			<param name="id" value="1" />
-			<remap from="robots" to="/robots" />
-			<remap from="out_pose" to="out_pose" />
-		</node>
+	<node name="SimulatedPose2TfPublisher" pkg="robot_tf2" type="robot_tf2_node" respawn="true" />
 
+	<group ns="Manual_Robot">
 		<node name="teleop_key" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py">
 			<remap from="cmd_vel" to="keyboard_input" />
 		</node>
