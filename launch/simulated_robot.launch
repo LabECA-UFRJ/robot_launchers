@@ -8,7 +8,7 @@
 			<remap from="error" to="error" />
 		</node>
 
-		<node name="angular_proportional_controller" pkg="controller" type="controller_node">
+		<node name="angular_proportional_controller" pkg="controller" type="controller_angle_follow_node">
 			<param name="P_gain" value="-0.005" />
 			<param name="D_gain" value="-0.00001" />
 

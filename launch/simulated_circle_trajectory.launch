@@ -1,0 +1,42 @@
+<launch>
+	<group ns="Auto_Robot">
+		<node name="circle_trajectory_controller" pkg="controller" type="controller_circle_follow_node">
+            <param name="ref_frame" value="world" />
+            <param name="child_frame" value="Simulated_2" />
+            <param name="k1" value="0.08" />
+            <param name="k2" value="-1" />
+            <param name="k3" value="0.2" />
+            <param name="c1" value="10" />
+            <param name="c2" value="1" />
+            <param name="U" value="0.01" />
+        </node>
+
+		<node name="twist_bridge" pkg="twist_to_motorsignal" type="twist_to_motorsignal_node">
+			<remap from="twist" to="twist_signal" />
+			<remap from="signal" to="motor_signal" />
+			<param name="max_motor_signal" value="1" />
+		</node>
+
+		<node name="unity_router" pkg="router" type="router_unity_node">
+			<param name="id" value="2" />
+			<remap from="motor_signal" to="motor_signal" />
+			<remap from="robot_cmd_vel" to="/robot_cmd_vel" />
+		</node>
+
+		<node name="spawner" pkg="robot_spawner" type="spawner.py">
+			<param name="id" value="2" />
+			<param name="x" value="2.5" />
+			<param name="y" value="0" />
+			<param name="z" value="0" />
+			<param name="rotation" value="135.0" />
+			<remap from="presence" to="/presence" />
+			<remap from="robot" to="/robot_def" />
+		</node>
+	</group>
+
+	<arg name="ros_ip" />
+	<param name="/ROS_IP" value="$(arg ros_ip)" />
+	<node name="UnityBridge" pkg="simulation_endpoint" type="server_endpoint.py" respawn="true" />
+
+	<node name="SimulatedPose2TfPublisher" pkg="robot_tf2" type="robot_tf2_node" respawn="true" />
+</launch>
