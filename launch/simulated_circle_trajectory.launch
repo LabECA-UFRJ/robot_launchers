@@ -4,11 +4,11 @@
             <param name="ref_frame" value="world" />
             <param name="child_frame" value="Simulated_2" />
             <param name="k1" value="0.08" />
-            <param name="k2" value="-1" />
-            <param name="k3" value="0.2" />
-            <param name="c1" value="10" />
+            <param name="k2" value="-2" />
+            <param name="k3" value="-1" />
+            <param name="c1" value="3" />
             <param name="c2" value="1" />
-            <param name="U" value="0.01" />
+            <param name="U" value="0.1" />
         </node>
 
 		<node name="twist_bridge" pkg="twist_to_motorsignal" type="twist_to_motorsignal_node">
