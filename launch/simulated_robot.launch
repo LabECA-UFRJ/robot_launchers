@@ -9,8 +9,8 @@
 		</node>
 
 		<node name="angular_proportional_controller" pkg="controller" type="controller_angle_follow_node">
-			<param name="P_gain" value="-0.005" />
-			<param name="D_gain" value="-0.00001" />
+			<param name="P_gain" value="0.03" />
+			<param name="D_gain" value="0.0004" />
 
 			<remap from="error" to="error" />
 			<remap from="control_signal" to="twist_signal" />
@@ -34,7 +34,7 @@
 			<param name="x" value="0" />
 			<param name="y" value="0" />
 			<param name="z" value="0" />
-			<param name="rotation" value="90.0" />
+			<param name="rotation" value="135.0" />
 			<remap from="presence" to="/presence" />
 			<remap from="robot" to="/robot_def" />
 		</node>
@@ -66,8 +66,8 @@
 		<node name="spawner" pkg="robot_spawner" type="spawner.py">
 			<param name="id" value="1" />
 			<param name="x" value="3" />
-			<param name="y" value="0" />
-			<param name="z" value="3" />
+			<param name="y" value="3" />
+			<param name="z" value="0" />
 			<param name="rotation" value="0.0" />
 			<remap from="presence" to="/presence" />
 			<remap from="robot" to="/robot_def" />

@@ -25,8 +25,8 @@
 
 		<node name="spawner" pkg="robot_spawner" type="spawner.py">
 			<param name="id" value="2" />
-			<param name="x" value="2.5" />
-			<param name="y" value="0" />
+			<param name="x" value="4" />
+			<param name="y" value="3" />
 			<param name="z" value="0" />
 			<param name="rotation" value="135.0" />
 			<remap from="presence" to="/presence" />
