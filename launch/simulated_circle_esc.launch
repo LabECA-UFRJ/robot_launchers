@@ -3,12 +3,12 @@
 		<node name="circle_trajectory_controller" pkg="controller" type="controller_circle_follow_node">
             <param name="ref_frame" value="world" />
             <param name="child_frame" value="Simulated_2" />
-            <param name="k1" value="0.1" />
-            <param name="k2" value="-4" />
-            <param name="k3" value="-2" />
+            <param name="k1" value="0.09" />
+            <param name="k2" value="-3" />
+            <param name="k3" value="-1" />
             <param name="c1" value="3" />
             <param name="c2" value="1" />
-            <param name="U" value="0.4" />
+            <param name="U" value="0.3" />
         </node>
 
 		<node name="twist_bridge" pkg="twist_to_motorsignal" type="twist_to_motorsignal_node">
@@ -25,9 +25,10 @@
 		</node>
 
 		<node name="cost_function" pkg="cost_function" type="cost_function_node">
-			<param name="rate" value="120.0" />
+			<param name="rate" value="60.0" />
 			<param name="ref_frame" value="world" />
             <param name="robot_frame" value="Simulated_2" />
+			<param name="omega" value="10.0" />
 			<remap from="source_position" to="source_position" />
 			<remap from="cost" to="cost" />
 		</node>
