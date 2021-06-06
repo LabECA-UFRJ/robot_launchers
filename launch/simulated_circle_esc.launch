@@ -3,12 +3,12 @@
 		<node name="circle_trajectory_controller" pkg="controller" type="controller_circle_follow_node">
             <param name="ref_frame" value="world" />
             <param name="child_frame" value="Simulated_2" />
-            <param name="k1" value="0.4" />
+            <param name="k1" value="0.1" />
             <param name="k2" value="-4" />
             <param name="k3" value="-2" />
             <param name="c1" value="3" />
             <param name="c2" value="1" />
-            <param name="U" value="0.5" />
+            <param name="U" value="0.4" />
         </node>
 
 		<node name="twist_bridge" pkg="twist_to_motorsignal" type="twist_to_motorsignal_node">
@@ -18,14 +18,14 @@
 		</node>
 
 		<node name="point_provider" pkg="point_provider" type="point_provider_const_node">
-			<param name="x" value="10.0" />
-			<param name="y" value="10.0" />
+			<param name="x" value="5.0" />
+			<param name="y" value="5.0" />
 			<param name="rate" value="120.0" />
 			<remap from="point" to="source_position" />
 		</node>
 
 		<node name="cost_function" pkg="cost_function" type="cost_function_node">
-			<param name="rate" value="240.0" />
+			<param name="rate" value="120.0" />
 			<param name="ref_frame" value="world" />
             <param name="robot_frame" value="Simulated_2" />
 			<remap from="source_position" to="source_position" />
@@ -33,14 +33,14 @@
 		</node>
 
 		<node name="esc_controller" pkg="esc_controller" type="esc_controller_node">
-			<param name="rate" value="30.0" />
+			<param name="rate" value="120.0" />
 			<param name="ref_frame" value="world" />
             <param name="robot_frame" value="Simulated_2" />
-            <param name="radius" value="2.0" />
-            <param name="gain" value="512" />
+            <param name="radius" value="1.0" />
+            <param name="gain" value="1512" />
             <param name="windup_limit" value="10" />
-            <param name="omega_high" value="1000" />
-            <param name="omega_low" value="100" />
+            <param name="omega_high" value="900" />
+            <param name="omega_low" value="450" />
 			<remap from="cost" to="cost" />
 			<remap from="reference" to="circle_reference" />
 		</node>
