@@ -10,6 +10,7 @@
 
 		<node name="angular_proportional_controller" pkg="controller" type="controller_angle_follow_node">
 			<param name="P_gain" value="0.03" />
+			<param name="I_gain" value="0.01" />
 			<param name="D_gain" value="0.0004" />
 
 			<remap from="error" to="error" />
