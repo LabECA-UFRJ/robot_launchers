@@ -8,7 +8,7 @@
             <param name="k3" value="-1" />
             <param name="c1" value="3" />
             <param name="c2" value="1" />
-            <param name="U" value="0.3" />
+            <param name="U" value="0.4" />
         </node>
 
 		<node name="twist_bridge" pkg="twist_to_motorsignal" type="twist_to_motorsignal_node">
@@ -18,8 +18,8 @@
 		</node>
 
 		<node name="point_provider" pkg="point_provider" type="point_provider_const_node">
-			<param name="x" value="5.0" />
-			<param name="y" value="5.0" />
+			<param name="x" value="6.0" />
+			<param name="y" value="6.0" />
 			<param name="rate" value="120.0" />
 			<remap from="point" to="source_position" />
 		</node>
@@ -37,7 +37,7 @@
 			<param name="rate" value="120.0" />
 			<param name="ref_frame" value="world" />
             <param name="robot_frame" value="Simulated_2" />
-            <param name="radius" value="1.0" />
+            <param name="radius" value="0.6" />
             <param name="gain" value="1512" />
             <param name="windup_limit" value="10" />
             <param name="omega_high" value="900" />
@@ -54,8 +54,20 @@
 
 		<node name="spawner" pkg="robot_spawner" type="spawner.py">
 			<param name="id" value="2" />
-			<param name="x" value="4" />
-			<param name="y" value="3" />
+			<param name="x" value="0" />
+			<param name="y" value="0" />
+			<param name="z" value="0" />
+			<param name="rotation" value="135.0" />
+			<remap from="presence" to="/presence" />
+			<remap from="robot" to="/robot_def" />
+		</node>
+	</group>
+
+	<group ns="Static_Robot">
+		<node name="spawner" pkg="robot_spawner" type="spawner.py">
+			<param name="id" value="13" />
+			<param name="x" value="3" />
+			<param name="y" value="3.5" />
 			<param name="z" value="0" />
 			<param name="rotation" value="135.0" />
 			<remap from="presence" to="/presence" />
